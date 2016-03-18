@@ -1,0 +1,182 @@
+# CDS Hooks Kick-Off Meeting
+
+- Thursday, March 17, 2016
+- 2:00pm - 3:00pm America/Chicago
+- WebEx
+- [Mailing list discussion regarding this meeting](https://groups.google.com/d/msg/cds-hooks/YobygXs1Wkw/Azb0V7nbHAAJ)
+
+## Attendees
+- Alex Tatiyants (Stanson Health)
+- Chip Ach (athenahealth)
+- Chris Hansen (First Databank)
+- Dan Gottlieb (Boston Children’s)
+- Dave Bouvier (Wolters Kluwer)
+- Gino Leovac (Nuance Communications Inc.)
+- Grahame Grieve (HL7)
+- Howard Strasberg (Wolters Kluwer)
+- Isaac Vetter (Epic)
+- James Kieliszek (VisualDx)
+- Jason Walonoski (MITRE)
+- Jeff Danford (Allscripts)
+- Jeff Malins (HealthReactor)
+- Joel Longtine (RxREVU)
+- Josh Mandel (Harvard)
+- Kalyani Yerra (Premier Inc)
+- Kelly Faas (Allscripts)
+- Ken Burney (Allscripts)
+- Ken Kawamoto (University of Utah, HL7)
+- Kevin Shekleton (Cerner)
+- Kyle Thorson (Allscripts)
+- Kyle Wildnauer-Haigney (RxREVU)
+- Manoj Sharma (Allscripts)
+- Matt Varghese (Epic)
+- Nate Weiner (Avhana Health)
+- Nikolai Schwertner (MedAppTech)
+- Peregrin Marshall (RxREVU)
+- Ron Dahlgren (Stanson Health, Transpilers)
+- Ryan Brown (Allscripts)
+- Sean Smith (RxREVU)
+- Terry McDonnell (Syapse)
+- Tony Loeser (Syapse)
+
+## Minutes
+
+Josh Mandel:
+> Thanks to everyone for joining us for our first CDS Hooks kickoff call.
+Brief introduction to [SMART](http://smarthealthit.org/) and the success we've had with SMART apps; showed the [SMART App Gallery](https://gallery.smarthealthit.org/).
+While SMART has been a success, there are limitations; namely, the user must launch the app.
+CDS Hooks allow us to launch the SMART app when it's relevant
+
+> With CDS Hooks, we instrument the EHR, having the EHR notify services in real-time when an event occurs.
+The CDS service must respond quickly and synchronously with information for the EHR/user
+
+> Introduction to the CDS card model: information, links, and suggestions.
+Demo of http://hooks.fhir.me/
+
+> CDS Hooks are designed to augment the user experience in the EHR and change the user's actions.
+
+> Overview of the [Orlando Connectathon work](http://wiki.hl7.org/index.php?title=201601_CDS_on_FHIR_Connectathon_Track_Proposal) -- around 15 people worked on CDS Hooks. Cerner implemented CDS Hooks in their EHR.
+
+Ken Kawamoto:
+> Has there been any Epic participation?
+
+Josh:
+> There was a person from Epic who registered for this call. Are they on and if so, want to comment? The only other implementation on an EHR I'm aware of is Cerner. Clearly from the participants on the call today, there is a lot of interest from EHR vendors.
+
+Issac & Matt (Epic):
+> We're on the call
+
+Josh:
+> Thanks. I'm not looking for commitments for vendors right now but I'm interested in hearing feedback on CDS Hooks as a specification.
+
+Ken Kawamoto:
+> Have you thought about doing CDS by hooking out from the vendor's existing proprietary decision support? Epic's proprietary decision support rule engine is very nice and if everyone followed that model it would good.
+
+Manoj (Allscripts):
+> _ed: missed this_
+
+Josh:
+> Standardizing on rules engine is difficult for a variety of use cases (eg, machine learning). You could use the EHR's rule engine to determine when you call out to individual CDS services. So, CDS Hooks isn't necessarily a replacement for the EHR's existing rules engine / decision support. I'd like to not get too much into the specifics of the decision; rather, let's focus this call on what our working model will be.
+
+> Introduction to [CDS Hooks Sprint Program](https://github.com/cds-hooks/cds-hooks/wiki/Sprint-Program)
+
+> Discussion of current technical objectives for the sprints.
+ - Prefetching data
+ - How do CDS services advertise their metadata (when they should be called, where their endpoint is located, data requirements, etc)
+
+Ken Kawamoto:
+> Comment on metadata - Bryn has been working on a FHIR based metadata model. We should look at that.
+
+Josh:
+> Sure, add that to the list of things to evaluate.
+
+Kalyani (Premier):
+> Can we have a place for people to add their opinion on the various technical/design discussions?
+
+Josh:
+> Yes, I'll cover the ways in which we'll collaborate and capture our decisions in a minute. Back to the technical objectives:
+
+> Moving on to CDS Hook's use of Parameters resource. There is discussion on if we should use the FHIR Parameters resource or something different (like a simplified JSON model specific to CDS Hooks). This isn't something we'll decide today but will discuss during the sprints.
+
+> Security is another open discussion. We have not proposed solutions for security holistically yet and will have to work through this.
+
+> Finally, how will we catalog the various activities that are supported?
+
+Caller:
+> In the demo what activity what were you using?
+
+Josh:
+> Medication prescribe
+
+Ron (Stanson Health):
+> Two questions:
+ -How does prefetch work?
+ -Activity catalog: You may want to leave it as extensible as possible since the workflow granularity differs from EHR to EHR.
+
+Josh:
+> <Describes prefetching as documented on the Wiki>
+
+> Agreed on the activities. We're trying to define (today) activities that are widely available everywhere. Activities are an open set so I expect additional activities to be added, even private activities specific to a particular EHR.
+
+Ron (Stanson Health):
+> Private is not a concern; rather, negotiation with each EHR on the activity most appropriate for their workflow
+
+Matt (Epic):
+> These calls are all going to be synchronous, right? Any defined SLAs?
+
+Josh:
+> Yes and we haven't defined SLAs yet. We're saying we want these calls to be measured in milliseconds but we need to think through guidelines or any expected behavior for poor performing calls.
+
+Kalyani (Premier):
+> What about error scenarios?
+
+Josh:
+> Yes, this is something we'd tackle with our technical objectives.
+
+> Discussion of the Sprint Ideas (https://github.com/cds-hooks/cds-hooks/wiki/Sprint-Ideas). Tasks are broken up into infrastructure, EHRs, and CDS Service work.
+
+Kalyani:
+> Isn't the [CDS invoker](https://github.com/cds-hooks/cds-hooks/issues/6) hooks.fhir.me?
+
+Josh:
+> The [CDS invoker](https://github.com/cds-hooks/cds-hooks/issues/6) I'm thinking of is something that is fully automated and headless that would be useful for automated testing. hooks.fhir.me is a great UX demo.
+
+Ken:
+> Can we leverage existing vendor tools around CDS? I'm thinking of Epic in particular. This could help expedite our path to production.
+
+Josh:
+> I'd like to use as many open tools as possible. Let's hear from the vendors on the call.
+
+Jeff (Allscripts):
+> We're willing to implement CDS services. We have some others from Allscripts on the EHR side that are on the call who may comment on implementing CDS Hooks in our EHR.
+
+Ryan (Allscripts):
+> I'm on the EHR side and this is my first exposure to CDS Hooks so we need to understand this more prior to committing to anything.
+
+Chip (athenahealth):
+> We're looking at CDS Hooks closely as we already were looking at this problem space. Like Allscripts, we need to look at this more closely to see how timelines align.
+
+Manoj (Allscripts):
+> We'll likely tackle the CDS service side first prior to the EHR work.
+
+Matt (Epic):
+> We're talking about what we can do in the CDS Hooks space. Ken mentioned the Epic tool that we have (Best Practice Advisory Framework) and we are looking at incorporating CDS Hooks. However, we're looking at priorities but cannot commit to anything right now. We are interested in continuing to look at this.
+
+Kevin (Cerner):
+> Cerner is very interested in implementing CDS Hooks in our EHR and we're committed to helping drive this standard. On Ken's comment about vendor specific tools, in implementing CDS Hooks on Cerner I don't see how we could leverage any existing tools we have for the broader community.
+
+Isaac (Epic):
+> I think Ken was asking more about can we leverage the EHR's existing decision support system to implement CDS Hooks. Also, one of the challenges we see is how do we communicate the data in the UI to the CDS services?
+
+Kevin (Cerner):
+> Oh, I see. Yes, definitely then. I implemented CDS Hooks on Cerner via Cerner's existing decision support framework. And I agree that it will be a challenge to get that in-process data from the user that only exists in the UI. It's something I know will be challenging but I think CDS Hooks has a lot of value without this. For instance, at HIMSS we showed work from Intermountain on a Billirubin CDS service that show a lot of value with the little we've defined today.
+
+Peregrin (RxREVU):
+> A lot of our content doesn't come from the EHR so there is a lot of value in CDS Hooks without the UI data. There is lots of data that doesn't live in the EHR (genetics, cost information) so CDS Hooks is still valuable -- we don't necessarily need lots of data from the EHR.
+
+Josh:
+> Thanks for those comments. Thank you so much for everyone's interest. Concrete next steps:
+ - We have a [CDS Hooks track](http://wiki.hl7.org/index.php?title=201605_CDS_Hooks_Connectathon_Track_Proposal) at the [May HL7 WGM Connectathon](http://www.hl7.org/events/wgm052016/)
+ - Work on issues in [Github](https://github.com/cds-hooks/cds-hooks), [mailing list](https://groups.google.com/forum/#!forum/cds-hooks), and [Zulip](https://zulip.org/) chat at https://chat.fhir.org/
+
+> Let's work as a community between now and in May on these the technical objectives I've covered. Come May at the Connectathon, we should have existing work that we can build upon. Thank you for everyone's participation today.
